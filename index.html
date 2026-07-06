@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>現場帳 Ver.0.61</title>
+<title>現場帳 Ver.0.63</title>
 <style>
 :root{
   --bg:#f4f6f8;--card:#fff;--text:#17202a;--muted:#667085;--line:#d9e0e8;
   --primary:#1f6feb;--green:#198754;--orange:#f59e0b;--red:#dc3545;--purple:#7c3aed;
-  --radius:18px;--shadow:0 8px 24px rgba(16,24,40,.08);--hourHeight:64px;--labelW:54px;
+  --radius:18px;--shadow:0 8px 24px rgba(16,24,40,.08);--hourHeight:64px;--labelW:58px;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--text);overscroll-behavior:none}
@@ -17,16 +17,13 @@ header{position:sticky;top:0;z-index:20;padding:14px;background:rgba(238,244,255
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px}.title{font-size:20px;font-weight:900}.sub{font-size:12px;color:var(--muted);margin-top:2px}
 .btn{border:0;border-radius:14px;padding:10px 12px;font-weight:800;background:#fff;color:var(--text);box-shadow:0 2px 8px rgba(16,24,40,.08);cursor:pointer}
 .btn.primary{background:var(--primary);color:#fff}.btn.green{background:var(--green);color:#fff}.btn.orange{background:var(--orange);color:#fff}.btn.red{background:var(--red);color:#fff}.btn.ghost{background:#eef2f7;color:#344054;box-shadow:none}.btn.small{font-size:12px;padding:7px 9px;border-radius:11px}.btn.full{width:100%}
-.tabs{display:flex;gap:8px;padding:10px 12px;position:sticky;top:65px;z-index:19;background:rgba(244,246,248,.90);backdrop-filter:blur(8px)}
-.tab{flex:1;border:0;border-radius:999px;padding:10px 6px;background:#fff;font-weight:900;color:#475467;box-shadow:0 2px 8px rgba(16,24,40,.06)}.tab.active{background:var(--primary);color:#fff}
 main{padding:12px}.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}
 .section-title{font-size:15px;font-weight:900;margin:2px 0 10px;display:flex;align-items:center;justify-content:space-between}
 .case-name{font-size:18px;font-weight:900;margin-bottom:4px}.pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:#eaf2ff;color:#1457b8;font-size:11px;font-weight:800}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.note{font-size:12px;color:var(--muted);line-height:1.6}
-.hidden{display:none!important}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.note{font-size:12px;color:var(--muted);line-height:1.6}
 .timeline-wrap{position:relative;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #e4e7ec}
-.timeline{position:relative;height:calc(var(--hourHeight) * 11);margin-left:var(--labelW);background:repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--hourHeight) - 1px), var(--line) calc(var(--hourHeight) - 1px), var(--line) var(--hourHeight));touch-action:none}
-.time-labels{position:absolute;left:0;top:0;width:var(--labelW);height:calc(var(--hourHeight)*11);background:#fbfcfe;border-right:1px solid #e4e7ec}.time-label{height:var(--hourHeight);font-size:12px;color:#667085;text-align:right;padding-right:8px;padding-top:4px}
+.timeline{position:relative;margin-left:var(--labelW);background:repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--hourHeight) - 1px), var(--line) calc(var(--hourHeight) - 1px), var(--line) var(--hourHeight));touch-action:none}
+.time-labels{position:absolute;left:0;top:0;width:var(--labelW);background:#fbfcfe;border-right:1px solid #e4e7ec}.time-label{height:var(--hourHeight);font-size:12px;color:#667085;text-align:right;padding-right:8px;padding-top:4px}
 .block{position:absolute;left:8px;right:8px;border-radius:14px;padding:8px 10px 14px;color:#fff;box-shadow:0 5px 14px rgba(16,24,40,.22);touch-action:none;user-select:none;overflow:hidden}
 .block .b-title{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.block .b-sub{font-size:11px;opacity:.95;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.block .resize{position:absolute;left:28%;right:28%;bottom:4px;height:5px;border-radius:99px;background:rgba(255,255,255,.92)}
 .blue{background:linear-gradient(145deg,#1f6feb,#0b5bd3)}.greenBlk{background:linear-gradient(145deg,#198754,#0f6b3f)}.orangeBlk{background:linear-gradient(145deg,#f59e0b,#d97706)}.redBlk{background:linear-gradient(145deg,#dc3545,#b02a37)}.purpleBlk{background:linear-gradient(145deg,#7c3aed,#5b21b6)}
@@ -37,40 +34,77 @@ label{display:block;font-size:12px;font-weight:900;color:#344054;margin:10px 0 5
 .footer-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;width:100%;max-width:480px;background:#fff;border-top:1px solid #e4e7ec;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
 .nav-item{font-size:11px;color:#667085;text-align:center;font-weight:900}.nav-item span{display:block;font-size:22px;margin-bottom:2px}
 .toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:999px;font-size:13px;z-index:80;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1}
+.badge{display:inline-block;background:#f2f4f7;color:#344054;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800}
+hr{border:0;border-top:1px solid #eef0f3;margin:14px 0}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div class="topbar"><div><div class="title">現場帳 Ver.0.61</div><div class="sub">Phase1 ベータ：入力はタイムテーブル一本化</div></div><button class="btn small" onclick="openAdmin()">⚙ 管理</button></div></header>
-<div class="tabs"><button class="tab active" id="tabHome" onclick="showView('home')">ホーム</button><button class="tab" id="tabDaily" onclick="showView('daily')">日報</button><button class="tab" id="tabAdmin" onclick="showView('admin')">管理</button></div>
+<header><div class="topbar"><div><div class="title">現場帳 Ver.0.63</div><div class="sub">行動記録の下にタイムテーブル / 早出・残業・夜間工事対応</div></div><button class="btn small" onclick="openAdmin()">⚙ 管理</button></div></header>
+
 <main>
-<section id="viewHome">
-  <div class="card"><div class="section-title">今日の案件</div><div class="case-name" id="caseTitle">佐野様邸 浴室改修</div><div class="sub">案件状態：施工中 / 工事区分：リフォーム / 得意先：○○建設 / 監督：鈴木監督</div><div style="margin-top:8px"><span class="pill">GPSは裏で取得</span> <span class="pill">常時追跡なし</span></div></div>
-  <div class="card"><div class="section-title">行動記録</div><div class="form-grid"><button class="btn primary" onclick="addEvent('到着')">📍 到着</button><button class="btn orange" onclick="addEvent('移動')">🚗 移動</button><button class="btn ghost" onclick="addEvent('休憩')">🍱 休憩</button><button class="btn red" onclick="addEvent('終了')">🏁 終了</button></div><p class="note">作業入力は日報タイムテーブルで行います。同時刻の二重登録を防ぐため、部屋カードからの作業追加は廃止しました。</p></div>
-  <div class="card"><div class="section-title">今日の工数</div><div id="homeSummary"></div></div>
-</section>
+  <section id="mainView">
+    <div class="card">
+      <div class="section-title">今日の案件</div>
+      <div class="case-name" id="caseTitle">佐野様邸 浴室改修</div>
+      <div class="sub" id="caseSub">案件状態：施工中 / 工事区分：リフォーム / 得意先：○○建設 / 監督：鈴木監督</div>
+      <div style="margin-top:8px"><span class="pill">GPSは裏で取得</span> <span class="pill">常時追跡なし</span></div>
+    </div>
 
-<section id="viewDaily" class="hidden">
-  <div class="card">
-    <div class="section-title">日報タイムテーブル <button class="btn small green" onclick="openWorkModal()">＋作業</button></div>
-    <div class="timeline-wrap"><div class="time-labels" id="timeLabels"></div><div class="timeline" id="timeline"></div></div>
-    <p class="note">ブロックを上下ドラッグで時間移動。下端の白バーで伸縮。タップで案件・部屋・作業内容・作業区分を編集します。</p>
-  </div>
-  <div class="card"><div class="section-title">本日の集計</div><div id="dailySummary"></div></div>
-</section>
+    <div class="card">
+      <div class="section-title">行動記録</div>
+      <div class="form-grid">
+        <button class="btn primary" onclick="addEvent('到着')">📍 到着</button>
+        <button class="btn orange" onclick="addEvent('移動')">🚗 移動</button>
+        <button class="btn ghost" onclick="addEvent('休憩')">🍱 休憩</button>
+        <button class="btn red" onclick="addEvent('終了')">🏁 終了</button>
+      </div>
+      <p class="note">操作はここだけ。GPSは裏で取得予定。作業内容は下のタイムテーブルで調整します。</p>
+    </div>
 
-<section id="viewAdmin" class="hidden">
-  <div class="card"><div class="section-title">管理者メニュー</div>
-    <div class="list-row"><div><div class="row-title">案件マスター</div><div class="row-sub">施主・住所・得意先・監督・状態</div></div><button class="btn small primary" onclick="openCaseModal()">編集</button></div>
-    <div class="list-row"><div><div class="row-title">部屋マスター</div><div class="row-sub">案件に紐づく部屋・㎡・階・備考</div></div><button class="btn small primary" onclick="openRoomList()">開く</button></div>
-    <div class="list-row"><div><div class="row-title">作業内容マスター</div><div class="row-sub">仮登録・承認は今後実装</div></div><button class="btn small ghost">準備中</button></div>
-    <div class="list-row"><div><div class="row-title">得意先マスター</div><div class="row-sub">元請・業者別の利益分析に利用</div></div><button class="btn small ghost">準備中</button></div>
-    <div class="list-row"><div><div class="row-title">担当者マスター</div><div class="row-sub">現場監督別の傾向分析に利用</div></div><button class="btn small ghost">準備中</button></div>
-  </div>
-  <div class="card"><div class="section-title">部屋別工数</div><div id="roomSummary"></div></div>
-</section>
+    <div class="card">
+      <div class="section-title">
+        <span>日報タイムテーブル</span>
+        <button class="btn small green" onclick="openWorkModal()">＋作業</button>
+      </div>
+      <div class="form-grid">
+        <button class="btn small ghost" onclick="setRangePreset('normal')">通常 7-18</button>
+        <button class="btn small ghost" onclick="setRangePreset('early')">早出 5-18</button>
+        <button class="btn small ghost" onclick="setRangePreset('overtime')">残業 7-22</button>
+        <button class="btn small ghost" onclick="setRangePreset('night')">夜間 20-翌6</button>
+      </div>
+      <div class="form-grid" style="margin-top:8px">
+        <div><label>表示開始</label><input id="rangeStart" type="time" onchange="saveRangeFromInputs()"></div>
+        <div><label>表示終了</label><input id="rangeEnd" type="time" onchange="saveRangeFromInputs()"></div>
+      </div>
+      <p class="note" id="rangeNote"></p>
+      <div class="timeline-wrap"><div class="time-labels" id="timeLabels"></div><div class="timeline" id="timeline"></div></div>
+      <p class="note">ブロックを上下ドラッグで時間移動。下端の白バーで伸縮。翌朝までの工事は「夜間 20-翌6」で表示できます。</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">本日の集計</div>
+      <div id="dailySummary"></div>
+    </div>
+  </section>
+
+  <section id="adminView" style="display:none">
+    <div class="card"><div class="section-title">管理者メニュー <button class="btn small ghost" onclick="closeAdmin()">戻る</button></div>
+      <div class="list-row"><div><div class="row-title">案件マスター</div><div class="row-sub">施主・住所・得意先・監督・状態</div></div><button class="btn small primary" onclick="openCaseModal()">編集</button></div>
+      <div class="list-row"><div><div class="row-title">部屋マスター</div><div class="row-sub">案件に紐づく部屋・㎡・階・備考</div></div><button class="btn small primary" onclick="openRoomList()">開く</button></div>
+      <div class="list-row"><div><div class="row-title">作業内容マスター</div><div class="row-sub">仮登録・承認は今後実装</div></div><button class="btn small ghost">準備中</button></div>
+      <div class="list-row"><div><div class="row-title">得意先マスター</div><div class="row-sub">元請・業者別の利益分析に利用</div></div><button class="btn small ghost">準備中</button></div>
+      <div class="list-row"><div><div class="row-title">担当者マスター</div><div class="row-sub">現場監督別の傾向分析に利用</div></div><button class="btn small ghost">準備中</button></div>
+    </div>
+    <div class="card"><div class="section-title">部屋別工数</div><div id="roomSummary"></div></div>
+  </section>
 </main>
-<nav class="footer-nav"><div class="nav-item" onclick="showView('home')"><span>🏠</span>ホーム</div><div class="nav-item" onclick="showView('daily')"><span>📅</span>日報</div><div class="nav-item" onclick="openWorkModal()"><span>＋</span>作業</div><div class="nav-item" onclick="showView('admin')"><span>⚙</span>管理</div></nav>
+
+<nav class="footer-nav">
+  <div class="nav-item" onclick="scrollToTop()"><span>🏠</span>上へ</div>
+  <div class="nav-item" onclick="scrollToTimeline()"><span>📅</span>日報</div>
+  <div class="nav-item" onclick="openWorkModal()"><span>＋</span>作業</div>
+</nav>
 </div>
 
 <div class="modal" id="workModal"><div class="sheet"><h2 id="workModalTitle">作業追加</h2><input type="hidden" id="workId">
@@ -78,57 +112,156 @@ label{display:block;font-size:12px;font-weight:900;color:#344054;margin:10px 0 5
 <label>部屋タグ</label><select id="workRoom"></select>
 <label>作業内容</label><select id="workName"><option>床下地</option><option>壁下地</option><option>天井下地</option><option>PB貼り</option><option>解体</option><option>養生</option><option>材料搬入</option><option>清掃・片付け</option><option>打合せ</option><option>その他</option></select>
 <label>作業区分</label><select id="workReason"><option>通常作業</option><option>元請都合</option><option>他業者都合</option><option>設計変更</option><option>お客様追加</option><option>自社手直し</option><option>材料待ち</option><option>天候</option><option>その他</option></select>
-<div class="form-grid"><div><label>開始</label><input id="workStart" type="time" value="08:00"></div><div><label>終了</label><input id="workEnd" type="time" value="09:00"></div></div>
+<div class="form-grid">
+  <div><label>開始日</label><select id="startDay"><option value="0">当日</option><option value="1">翌日</option></select></div>
+  <div><label>開始時刻</label><input id="workStart" type="time" value="08:00"></div>
+</div>
+<div class="form-grid">
+  <div><label>終了日</label><select id="endDay"><option value="0">当日</option><option value="1">翌日</option></select></div>
+  <div><label>終了時刻</label><input id="workEnd" type="time" value="09:00"></div>
+</div>
 <label>メモ</label><textarea id="workMemo" placeholder="追加理由、元請指示、他業者都合など"></textarea>
 <p class="note" id="overlapNote"></p>
 <div class="form-grid" style="margin-top:14px"><button class="btn ghost" onclick="closeModal('workModal')">キャンセル</button><button class="btn primary" onclick="saveWork()">保存</button></div>
-<button class="btn red hidden full" id="deleteWorkBtn" style="margin-top:10px" onclick="deleteWork()">削除</button></div></div>
+<button class="btn red full" id="deleteWorkBtn" style="display:none;margin-top:10px" onclick="deleteWork()">削除</button></div></div>
 
 <div class="modal" id="caseModal"><div class="sheet"><h2>案件マスター</h2>
 <label>案件名</label><input id="caseName"><label>施主名</label><input id="ownerName"><label>住所</label><input id="caseAddress"><label>位置情報 / GoogleマップURL</label><input id="caseMap"><div class="form-grid"><div><label>予定工期 開始</label><input id="caseStart" type="date"></div><div><label>予定工期 終了</label><input id="caseEnd" type="date"></div></div><label>工事区分</label><select id="caseType"><option>新築</option><option>改修</option><option>リフォーム</option><option>下請け</option></select><label>案件状態</label><select id="caseStatus"><option>問い合わせ</option><option>現調予定</option><option>見積中</option><option>受注</option><option>施工中</option><option>完了</option><option>失注</option></select><label>得意先</label><input id="clientName"><label>担当現場監督</label><input id="supervisorName"><div class="form-grid" style="margin-top:14px"><button class="btn ghost" onclick="closeModal('caseModal')">閉じる</button><button class="btn primary" onclick="saveCase()">保存</button></div></div></div>
 
-<div class="modal" id="roomModal"><div class="sheet"><h2>部屋マスター</h2><div id="roomList"></div><hr style="border:0;border-top:1px solid #eee;margin:14px 0"><input type="hidden" id="roomId"><label>部屋名</label><select id="roomName"><option>浴室</option><option>洗面所</option><option>トイレ</option><option>LDK</option><option>洋室</option><option>和室</option><option>玄関</option><option>廊下</option><option>その他</option></select><label>面積（㎡）</label><input id="roomArea" type="number" step="0.01"><label>階</label><select id="roomFloor"><option>1階</option><option>2階</option><option>3階</option><option>外部</option></select><label>備考</label><textarea id="roomMemo"></textarea><div class="form-grid" style="margin-top:14px"><button class="btn ghost" onclick="resetRoomForm()">新規</button><button class="btn primary" onclick="saveRoom()">保存</button></div><button class="btn ghost full" style="margin-top:10px" onclick="closeModal('roomModal')">閉じる</button></div></div>
+<div class="modal" id="roomModal"><div class="sheet"><h2>部屋マスター</h2><div id="roomList"></div><hr><input type="hidden" id="roomId"><label>部屋名</label><select id="roomName"><option>浴室</option><option>洗面所</option><option>トイレ</option><option>LDK</option><option>洋室</option><option>和室</option><option>玄関</option><option>廊下</option><option>その他</option></select><label>面積（㎡）</label><input id="roomArea" type="number" step="0.01"><label>階</label><select id="roomFloor"><option>1階</option><option>2階</option><option>3階</option><option>外部</option></select><label>備考</label><textarea id="roomMemo"></textarea><div class="form-grid" style="margin-top:14px"><button class="btn ghost" onclick="resetRoomForm()">新規</button><button class="btn primary" onclick="saveRoom()">保存</button></div><button class="btn ghost full" style="margin-top:10px" onclick="closeModal('roomModal')">閉じる</button></div></div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const LS_CASE='genbanote_v061_case',LS_ROOMS='genbanote_v061_rooms',LS_WORKS='genbanote_v061_works';
+const LS_CASE='genbanote_v063_case',LS_ROOMS='genbanote_v063_rooms',LS_WORKS='genbanote_v063_works',LS_RANGE='genbanote_v063_range';
 let caseData=JSON.parse(localStorage.getItem(LS_CASE)||'null')||{name:'佐野様邸 浴室改修',owner:'佐野様',address:'静岡県○○市○○町1-2-3',map:'',start:'',end:'',type:'リフォーム',status:'施工中',client:'○○建設',supervisor:'鈴木監督'};
 let rooms=JSON.parse(localStorage.getItem(LS_ROOMS)||'null')||[{id:uid(),name:'浴室',area:'2.8',floor:'1階',memo:''},{id:uid(),name:'洗面所',area:'4.5',floor:'1階',memo:''},{id:uid(),name:'LDK',area:'18.0',floor:'1階',memo:''}];
 let works=JSON.parse(localStorage.getItem(LS_WORKS)||'null')||[];
-if(!works.length){works=[{id:uid(),roomId:rooms[1].id,name:'床下地',reason:'通常作業',start:'08:00',end:'09:00',memo:''},{id:uid(),roomId:rooms[1].id,name:'壁下地',reason:'元請都合',start:'09:15',end:'10:00',memo:'元請指示変更'},{id:uid(),roomId:rooms[0].id,name:'解体',reason:'他業者都合',start:'10:15',end:'11:00',memo:'設備撤去待ち'}]}
-let dragState=null;const startHour=7,endHour=18,minStep=15;
+let range=JSON.parse(localStorage.getItem(LS_RANGE)||'null')||{start:7*60,end:18*60};
+if(!works.length){works=[{id:uid(),roomId:rooms[1].id,name:'床下地',reason:'通常作業',startAbs:8*60,endAbs:9*60,memo:''},{id:uid(),roomId:rooms[1].id,name:'壁下地',reason:'元請都合',startAbs:9*60+15,endAbs:10*60,memo:'元請指示変更'},{id:uid(),roomId:rooms[0].id,name:'解体',reason:'他業者都合',startAbs:10*60+15,endAbs:11*60,memo:'設備撤去待ち'}]}
+let dragState=null;const minStep=15;
 function uid(){return 'id'+Math.random().toString(36).slice(2,10)+Date.now().toString(36)}
-function saveAll(){localStorage.setItem(LS_CASE,JSON.stringify(caseData));localStorage.setItem(LS_ROOMS,JSON.stringify(rooms));localStorage.setItem(LS_WORKS,JSON.stringify(works))}
-function showView(v){['Home','Daily','Admin'].forEach(x=>document.getElementById('view'+x).classList.add('hidden'));['Home','Daily','Admin'].forEach(x=>document.getElementById('tab'+x).classList.remove('active'));let c=v[0].toUpperCase()+v.slice(1);document.getElementById('view'+c).classList.remove('hidden');document.getElementById('tab'+c).classList.add('active');renderAll()}
-function closeModal(id){document.getElementById(id).classList.remove('show')}function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function saveAll(){localStorage.setItem(LS_CASE,JSON.stringify(caseData));localStorage.setItem(LS_ROOMS,JSON.stringify(rooms));localStorage.setItem(LS_WORKS,JSON.stringify(works));localStorage.setItem(LS_RANGE,JSON.stringify(range))}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}))
-function renderAll(){renderCase();renderTimeline();renderSummaries();renderRoomOptions();renderRoomList()}
-function renderCase(){document.getElementById('caseTitle').textContent=caseData.name;document.querySelector('#viewHome .sub').textContent=`案件状態：${caseData.status} / 工事区分：${caseData.type} / 得意先：${caseData.client||'-'} / 監督：${caseData.supervisor||'-'}`}
-function openAdmin(){showView('admin')}
+function renderAll(){renderCase();renderRangeInputs();renderTimeline();renderSummaries();renderRoomOptions();renderRoomList()}
+function renderCase(){document.getElementById('caseTitle').textContent=caseData.name;document.getElementById('caseSub').textContent=`案件状態：${caseData.status} / 工事区分：${caseData.type} / 得意先：${caseData.client||'-'} / 監督：${caseData.supervisor||'-'}`}
+function openAdmin(){document.getElementById('mainView').style.display='none';document.getElementById('adminView').style.display='block';window.scrollTo({top:0,behavior:'smooth'});renderAll()}
+function closeAdmin(){document.getElementById('adminView').style.display='none';document.getElementById('mainView').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+function scrollToTop(){closeAdmin();window.scrollTo({top:0,behavior:'smooth'})}
+function scrollToTimeline(){closeAdmin();document.querySelector('.timeline-wrap').scrollIntoView({behavior:'smooth',block:'start'})}
+function val(id){return document.getElementById(id).value}
+function setRangePreset(type){
+  if(type==='normal') range={start:7*60,end:18*60};
+  if(type==='early') range={start:5*60,end:18*60};
+  if(type==='overtime') range={start:7*60,end:22*60};
+  if(type==='night') range={start:20*60,end:30*60};
+  saveAll();renderAll();toast('表示時間を変更しました')
+}
+function saveRangeFromInputs(){
+  let s=timeToMin(val('rangeStart')), e=timeToMin(val('rangeEnd'));
+  if(e<=s)e+=1440;
+  range={start:s,end:e};saveAll();renderAll()
+}
+function renderRangeInputs(){
+  document.getElementById('rangeStart').value=minToTime(range.start%1440);
+  document.getElementById('rangeEnd').value=minToTime(range.end%1440);
+  document.getElementById('rangeNote').innerHTML=`表示範囲：<span class="badge">${absLabel(range.start)}〜${absLabel(range.end)}</span> / ${fmt(range.end-range.start)}`
+}
+function renderLabels(){
+  let labels=document.getElementById('timeLabels');labels.innerHTML='';
+  let hours=Math.ceil((range.end-range.start)/60);
+  labels.style.height=(hours*64)+'px';
+  for(let i=0;i<hours;i++){let m=range.start+i*60;let d=document.createElement('div');d.className='time-label';d.textContent=absLabel(m);labels.appendChild(d)}
+}
+function renderTimeline(){
+  renderLabels();
+  let tl=document.getElementById('timeline');tl.innerHTML='';
+  let h=Math.ceil((range.end-range.start)/60)*64;
+  tl.style.height=h+'px';
+  works.sort((a,b)=>a.startAbs-b.startAbs).forEach((w,i)=>{
+    if(w.endAbs<=range.start||w.startAbs>=range.end)return;
+    let r=rooms.find(x=>x.id===w.roomId);
+    let top=(Math.max(w.startAbs,range.start)-range.start)/60*64;
+    let height=Math.max(32,(Math.min(w.endAbs,range.end)-Math.max(w.startAbs,range.start))/60*64);
+    let div=document.createElement('div');
+    let cls=w.reason==='通常作業'?'blue':w.reason.includes('元請')?'orangeBlk':w.reason.includes('他業者')?'redBlk':'purpleBlk';
+    div.className='block '+cls;div.style.top=top+'px';div.style.height=height+'px';div.dataset.id=w.id;
+    div.innerHTML=`<div class="b-title">${r?r.name:'-'} / ${w.name}</div><div class="b-sub">${absLabel(w.startAbs)}〜${absLabel(w.endAbs)} ${w.endAbs-w.startAbs}分 / ${w.reason}</div><div class="resize"></div>`;
+    div.addEventListener('pointerdown',blockDown);
+    div.addEventListener('click',e=>{if(!dragState?.moved)editWork(w.id)});
+    tl.appendChild(div)
+  })
+}
+function openWorkModal(){
+  document.getElementById('workModalTitle').textContent='作業追加';document.getElementById('workId').value='';renderRoomOptions();
+  document.getElementById('workName').value='床下地';document.getElementById('workReason').value='通常作業';
+  document.getElementById('startDay').value=range.start>=1440?'1':'0';document.getElementById('workStart').value=minToTime(range.start%1440);
+  document.getElementById('endDay').value=range.start+60>=1440?'1':'0';document.getElementById('workEnd').value=minToTime((range.start+60)%1440);
+  document.getElementById('workMemo').value='';document.getElementById('deleteWorkBtn').style.display='none';document.getElementById('overlapNote').textContent='';document.getElementById('workModal').classList.add('show')
+}
+function editWork(id){
+  let w=works.find(x=>x.id===id);if(!w)return;document.getElementById('workModalTitle').textContent='作業編集';document.getElementById('workId').value=w.id;renderRoomOptions();
+  document.getElementById('workRoom').value=w.roomId;document.getElementById('workName').value=w.name;document.getElementById('workReason').value=w.reason||'通常作業';
+  document.getElementById('startDay').value=w.startAbs>=1440?'1':'0';document.getElementById('workStart').value=minToTime(w.startAbs%1440);
+  document.getElementById('endDay').value=w.endAbs>=1440?'1':'0';document.getElementById('workEnd').value=minToTime(w.endAbs%1440);
+  document.getElementById('workMemo').value=w.memo||'';document.getElementById('deleteWorkBtn').style.display='block';document.getElementById('overlapNote').textContent='';document.getElementById('workModal').classList.add('show')
+}
+function saveWork(){
+  let id=val('workId');
+  let startAbs=Number(val('startDay'))*1440+timeToMin(val('workStart'));
+  let endAbs=Number(val('endDay'))*1440+timeToMin(val('workEnd'));
+  if(endAbs<=startAbs){document.getElementById('overlapNote').textContent='⚠ 終了時刻は開始より後にしてください。翌朝終了の場合は終了日を「翌日」にしてください。';toast('時刻を確認してください');return}
+  let data={id:id||uid(),roomId:val('workRoom'),name:val('workName'),reason:val('workReason'),startAbs,endAbs,memo:val('workMemo')};
+  let conflict=works.find(w=>w.id!==id && overlap(data.startAbs,data.endAbs,w.startAbs,w.endAbs));
+  if(conflict){let r=rooms.find(x=>x.id===conflict.roomId);document.getElementById('overlapNote').textContent=`⚠ ${absLabel(conflict.startAbs)}〜${absLabel(conflict.endAbs)} ${r?r.name:''}/${conflict.name} と時間が重複しています。`;toast('時間が重複しています');return}
+  if(id){works=works.map(w=>w.id===id?data:w);toast('作業を更新しました')}else{works.push(data);toast('作業を追加しました')}
+  saveAll();closeModal('workModal');renderAll()
+}
+function deleteWork(){let id=val('workId');works=works.filter(w=>w.id!==id);saveAll();closeModal('workModal');renderAll();toast('作業を削除しました')}
+function blockDown(e){
+  e.preventDefault();
+  let b=e.currentTarget,id=b.dataset.id,w=works.find(x=>x.id===id),isResize=e.target.classList.contains('resize');
+  dragState={id,isResize,startY:e.clientY,origStart:w.startAbs,origEnd:w.endAbs,moved:false,el:b};
+  b.setPointerCapture(e.pointerId);b.addEventListener('pointermove',blockMove);b.addEventListener('pointerup',blockUp,{once:true});b.addEventListener('pointercancel',blockUp,{once:true})
+}
+function blockMove(e){
+  if(!dragState)return;e.preventDefault();dragState.moved=true;
+  let delta=Math.round(((e.clientY-dragState.startY)/64*60)/minStep)*minStep,w=works.find(x=>x.id===dragState.id);
+  if(dragState.isResize){w.endAbs=Math.max(dragState.origStart+15,Math.min(range.end,dragState.origEnd+delta))}
+  else{let d=dragState.origEnd-dragState.origStart,ns=Math.max(range.start,Math.min(range.end-d,dragState.origStart+delta));w.startAbs=ns;w.endAbs=ns+d}
+  updateBlockElement(dragState.el,w)
+}
+function blockUp(e){
+  if(!dragState)return;let w=works.find(x=>x.id===dragState.id);let conflict=works.find(x=>x.id!==w.id && overlap(w.startAbs,w.endAbs,x.startAbs,x.endAbs));
+  if(conflict){toast('時間が重複したため元に戻しました');w.startAbs=dragState.origStart;w.endAbs=dragState.origEnd}
+  saveAll();dragState.el?.removeEventListener('pointermove',blockMove);dragState.el?.releasePointerCapture?.(e.pointerId);renderAll();setTimeout(()=>dragState=null,80)
+}
+function updateBlockElement(el,w){
+  if(!el||!w)return;let top=(Math.max(w.startAbs,range.start)-range.start)/60*64;let height=Math.max(32,(Math.min(w.endAbs,range.end)-Math.max(w.startAbs,range.start))/60*64);
+  el.style.top=top+'px';el.style.height=height+'px';let sub=el.querySelector('.b-sub');if(sub)sub.textContent=`${absLabel(w.startAbs)}〜${absLabel(w.endAbs)} ${w.endAbs-w.startAbs}分 / ${w.reason}`
+}
+function renderSummaries(){
+  let byReason={},byRoom={};works.forEach(w=>{byReason[w.reason||'通常作業']=(byReason[w.reason||'通常作業']||0)+(w.endAbs-w.startAbs);let r=rooms.find(x=>x.id===w.roomId)?.name||'未設定';byRoom[r]=(byRoom[r]||0)+(w.endAbs-w.startAbs)});
+  document.getElementById('dailySummary').innerHTML=summaryHtml(byReason);document.getElementById('roomSummary').innerHTML=summaryHtml(byRoom)
+}
+function summaryHtml(obj){let keys=Object.keys(obj);if(!keys.length)return '<p class="note">まだ記録がありません。</p>';return keys.map(k=>`<div class="summary-row"><span class="summary-k">${k}</span><span class="summary-v">${fmt(obj[k])}</span></div>`).join('')}
+function renderRoomOptions(){let s=document.getElementById('workRoom');s.innerHTML='';rooms.forEach(r=>{let o=document.createElement('option');o.value=r.id;o.textContent=`${r.name} ${r.area||'-'}㎡`;s.appendChild(o)})}
 function openCaseModal(){document.getElementById('caseName').value=caseData.name;document.getElementById('ownerName').value=caseData.owner;document.getElementById('caseAddress').value=caseData.address;document.getElementById('caseMap').value=caseData.map;document.getElementById('caseStart').value=caseData.start;document.getElementById('caseEnd').value=caseData.end;document.getElementById('caseType').value=caseData.type;document.getElementById('caseStatus').value=caseData.status;document.getElementById('clientName').value=caseData.client;document.getElementById('supervisorName').value=caseData.supervisor;document.getElementById('caseModal').classList.add('show')}
 function saveCase(){caseData={name:val('caseName'),owner:val('ownerName'),address:val('caseAddress'),map:val('caseMap'),start:val('caseStart'),end:val('caseEnd'),type:val('caseType'),status:val('caseStatus'),client:val('clientName'),supervisor:val('supervisorName')};saveAll();renderAll();closeModal('caseModal');toast('案件を保存しました')}
-function val(id){return document.getElementById(id).value}
-function renderRoomOptions(){let s=document.getElementById('workRoom');s.innerHTML='';rooms.forEach(r=>{let o=document.createElement('option');o.value=r.id;o.textContent=`${r.name} ${r.area||'-'}㎡`;s.appendChild(o)})}
-function renderLabels(){let labels=document.getElementById('timeLabels');labels.innerHTML='';for(let h=startHour;h<endHour;h++){let d=document.createElement('div');d.className='time-label';d.textContent=String(h).padStart(2,'0')+':00';labels.appendChild(d)}}
-function renderTimeline(){renderLabels();let tl=document.getElementById('timeline');tl.innerHTML='';works.sort((a,b)=>a.start.localeCompare(b.start)).forEach((w,i)=>{let r=rooms.find(x=>x.id===w.roomId);let top=(timeToMin(w.start)-startHour*60)/60*64;let height=Math.max(32,(timeToMin(w.end)-timeToMin(w.start))/60*64);let div=document.createElement('div');let cls=w.reason==='通常作業'?'blue':w.reason.includes('元請')?'orangeBlk':w.reason.includes('他業者')?'redBlk':'purpleBlk';div.className='block '+cls;div.style.top=top+'px';div.style.height=height+'px';div.dataset.id=w.id;div.innerHTML=`<div class="b-title">${r?r.name:'-'} / ${w.name}</div><div class="b-sub">${w.start}〜${w.end} ${dur(w.start,w.end)}分 / ${w.reason}</div><div class="resize"></div>`;div.addEventListener('pointerdown',blockDown);div.addEventListener('click',e=>{if(!dragState?.moved)editWork(w.id)});tl.appendChild(div)})}
-function openWorkModal(){document.getElementById('workModalTitle').textContent='作業追加';document.getElementById('workId').value='';renderRoomOptions();document.getElementById('workName').value='床下地';document.getElementById('workReason').value='通常作業';document.getElementById('workStart').value='08:00';document.getElementById('workEnd').value='09:00';document.getElementById('workMemo').value='';document.getElementById('deleteWorkBtn').classList.add('hidden');document.getElementById('overlapNote').textContent='';document.getElementById('workModal').classList.add('show')}
-function editWork(id){let w=works.find(x=>x.id===id);if(!w)return;document.getElementById('workModalTitle').textContent='作業編集';document.getElementById('workId').value=w.id;renderRoomOptions();document.getElementById('workRoom').value=w.roomId;document.getElementById('workName').value=w.name;document.getElementById('workReason').value=w.reason||'通常作業';document.getElementById('workStart').value=w.start;document.getElementById('workEnd').value=w.end;document.getElementById('workMemo').value=w.memo||'';document.getElementById('deleteWorkBtn').classList.remove('hidden');document.getElementById('overlapNote').textContent='';document.getElementById('workModal').classList.add('show')}
-function saveWork(){let id=val('workId');let data={id:id||uid(),roomId:val('workRoom'),name:val('workName'),reason:val('workReason'),start:val('workStart'),end:val('workEnd'),memo:val('workMemo')};if(timeToMin(data.end)<=timeToMin(data.start)){toast('終了時刻は開始より後にしてください');return}let conflict=works.find(w=>w.id!==id && overlap(data.start,data.end,w.start,w.end));if(conflict){let r=rooms.find(x=>x.id===conflict.roomId);document.getElementById('overlapNote').textContent=`⚠ ${conflict.start}〜${conflict.end} ${r?r.name:''}/${conflict.name} と時間が重複しています。`;toast('時間が重複しています');return}if(id){works=works.map(w=>w.id===id?data:w);toast('作業を更新しました')}else{works.push(data);toast('作業を追加しました')}saveAll();closeModal('workModal');renderAll()}
-function deleteWork(){let id=val('workId');works=works.filter(w=>w.id!==id);saveAll();closeModal('workModal');renderAll();toast('作業を削除しました')}
-function overlap(s1,e1,s2,e2){return timeToMin(s1)<timeToMin(e2)&&timeToMin(s2)<timeToMin(e1)}
-function blockDown(e){let b=e.currentTarget,id=b.dataset.id,w=works.find(x=>x.id===id),isResize=e.target.classList.contains('resize');dragState={id,isResize,startY:e.clientY,origStart:timeToMin(w.start),origEnd:timeToMin(w.end),moved:false};b.setPointerCapture(e.pointerId);b.addEventListener('pointermove',blockMove);b.addEventListener('pointerup',blockUp,{once:true})}
-function blockMove(e){if(!dragState)return;dragState.moved=true;let delta=Math.round(((e.clientY-dragState.startY)/64*60)/minStep)*minStep,w=works.find(x=>x.id===dragState.id);if(dragState.isResize){let ne=Math.max(dragState.origStart+15,Math.min(endHour*60,dragState.origEnd+delta));w.end=minToTime(ne)}else{let d=dragState.origEnd-dragState.origStart,ns=Math.max(startHour*60,Math.min(endHour*60-d,dragState.origStart+delta));w.start=minToTime(ns);w.end=minToTime(ns+d)}renderTimeline()}
-function blockUp(e){let w=works.find(x=>x.id===dragState.id);let conflict=works.find(x=>x.id!==w.id && overlap(w.start,w.end,x.start,x.end));if(conflict){toast('時間が重複したため元に戻しました');w.start=minToTime(dragState.origStart);w.end=minToTime(dragState.origEnd)}saveAll();renderAll();e.currentTarget.removeEventListener('pointermove',blockMove);setTimeout(()=>dragState=null,60)}
-function renderSummaries(){let byReason={},byRoom={};works.forEach(w=>{byReason[w.reason||'通常作業']=(byReason[w.reason||'通常作業']||0)+dur(w.start,w.end);let r=rooms.find(x=>x.id===w.roomId)?.name||'未設定';byRoom[r]=(byRoom[r]||0)+dur(w.start,w.end)});document.getElementById('homeSummary').innerHTML=summaryHtml(byReason);document.getElementById('dailySummary').innerHTML=summaryHtml(byReason);document.getElementById('roomSummary').innerHTML=summaryHtml(byRoom)}
-function summaryHtml(obj){let keys=Object.keys(obj);if(!keys.length)return '<p class="note">まだ記録がありません。</p>';return keys.map(k=>`<div class="summary-row"><span class="summary-k">${k}</span><span class="summary-v">${fmt(obj[k])}</span></div>`).join('')}
 function openRoomList(){renderRoomList();document.getElementById('roomModal').classList.add('show')}
 function renderRoomList(){let box=document.getElementById('roomList');if(!box)return;box.innerHTML='';rooms.forEach(r=>{let d=document.createElement('div');d.className='list-row';d.innerHTML=`<div><div class="row-title">${r.name}</div><div class="row-sub">${r.floor} / ${r.area||'-'}㎡ ${r.memo?'/ '+esc(r.memo):''}</div></div><button class="btn small ghost" onclick="editRoom('${r.id}')">編集</button>`;box.appendChild(d)})}
 function resetRoomForm(){document.getElementById('roomId').value='';document.getElementById('roomName').value='浴室';document.getElementById('roomArea').value='';document.getElementById('roomFloor').value='1階';document.getElementById('roomMemo').value=''}
 function editRoom(id){let r=rooms.find(x=>x.id===id);document.getElementById('roomId').value=r.id;document.getElementById('roomName').value=r.name;document.getElementById('roomArea').value=r.area;document.getElementById('roomFloor').value=r.floor;document.getElementById('roomMemo').value=r.memo||''}
 function saveRoom(){let id=val('roomId'),data={id:id||uid(),name:val('roomName'),area:val('roomArea'),floor:val('roomFloor'),memo:val('roomMemo')};if(id){rooms=rooms.map(r=>r.id===id?data:r);toast('部屋を更新しました')}else{rooms.push(data);toast('部屋を追加しました')}saveAll();resetRoomForm();renderAll()}
 function addEvent(type){toast(`${type}を記録しました（GPSは裏で取得予定）`)}
-function timeToMin(t){let [h,m]=t.split(':').map(Number);return h*60+m}function minToTime(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}function dur(s,e){return timeToMin(e)-timeToMin(s)}function fmt(m){let h=Math.floor(m/60),mm=m%60;return h?`${h}時間${mm?mm+'分':''}`:`${mm}分`}function esc(str){return String(str).replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
+function overlap(s1,e1,s2,e2){return s1<e2&&s2<e1}
+function timeToMin(t){let [h,m]=t.split(':').map(Number);return h*60+m}
+function minToTime(m){m=((m%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function absLabel(m){return (m>=1440?'翌':'')+minToTime(m)}
+function fmt(m){let h=Math.floor(m/60),mm=m%60;return h?`${h}時間${mm?mm+'分':''}`:`${mm}分`}
+function esc(str){return String(str).replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
 saveAll();renderAll();
 </script>
 </body></html>
